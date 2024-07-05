@@ -115,6 +115,7 @@ body, html {
 
 .wizard__footer {
     padding: 10px;
+    padding-top: 0;
     text-align: center;
 }
 
@@ -156,7 +157,6 @@ body, html {
     }
 
 .panels {
-    height: 300px;
     position: relative;
     overflow: hidden;
 }
@@ -166,7 +166,8 @@ body, html {
     top: 0;
     left: 0;
     transition: 0.5s all;
-    padding: 50px;
+    padding: 40px;
+    padding-bottom: 20px;
 }
 
 .panel__header {
@@ -195,6 +196,7 @@ body, html {
 
 .panel.movingIn {
     transform: translateX(0);
+    position: relative;
 }
 
 .steps {

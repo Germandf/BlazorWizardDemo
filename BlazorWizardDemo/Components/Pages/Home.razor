@@ -4,6 +4,11 @@
 
 <PageTitle>Home</PageTitle>
 
+<div>
+    <InputCheckbox id="fixed-height" @bind-Value="_fixedHeight" />
+    <label for="fixed-height" style="cursor: pointer;">Fixed height</label>
+</div>
+
 <div class="wrapper">
     <div id="wizard" class="wizard">
         <div class="wizard__content">
@@ -46,7 +51,7 @@
                 </div>
             </header>
 
-            <div class="panels">
+            <div class="panels" style="height: @GetHeight();">
                 @foreach (var panel in Steps)
                 {
                     <div class="panel @(panel.IsActive ? "movingIn" : panel.MovementClass)">
@@ -72,6 +77,10 @@
 </div>
 
 @code {
+
+    private bool _fixedHeight = true;
+
+    private string GetHeight() => _fixedHeight ? "275px" : "auto";
 
     private List<Step> Steps = new()
     {
