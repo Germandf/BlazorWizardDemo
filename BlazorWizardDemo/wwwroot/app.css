@@ -163,6 +163,8 @@ body, html {
     transition: 0.5s all;
     padding: 40px;
     padding-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .panel__header {
@@ -182,11 +184,11 @@ body, html {
 }
 
 .panel.movingOutBackward {
-    transform: translateX(-620px);
+    transform: translateX(-100%);
 }
 
 .panel.movingOutFoward {
-    transform: translateX(620px);
+    transform: translateX(100%);
 }
 
 .panel.movingIn {
@@ -304,7 +306,7 @@ body, html {
 
     .button.previous, .button.next {
         margin: 0 4px;
-        min-width: 120px;
+        min-width: 115px;
     }
 
     .button.disabled {
