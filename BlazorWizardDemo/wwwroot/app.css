@@ -307,8 +307,9 @@ body, html {
         background: #7baee6;
     }
 
-    .button.previous {
-        margin-right: 5px;
+    .button.previous, .button.next {
+        margin: 0 4px;
+        min-width: 120px;
     }
 
     .button.disabled {
