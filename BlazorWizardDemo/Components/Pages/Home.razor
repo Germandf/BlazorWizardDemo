@@ -13,12 +13,8 @@
     <div id="wizard" class="wizard">
         <div class="wizard__content">
             <header class="wizard__header">
-                <div class="wizard__header-overlay"></div>
-
-                <div class="wizard__header-content">
-                    <h1 class="wizard__title">Get start with Javascript!</h1>
-                    <p class="wizard__subheading">Start with <span>3</span> simple steps.</p>
-                </div>
+                <h1 class="wizard__title">Get started with Javascript!</h1>
+                <p class="wizard__subheading">Start with <span>3</span> simple steps.</p>
 
                 <div class="wizard__steps">
                     <nav class="steps">
@@ -51,7 +47,7 @@
                 </div>
             </header>
 
-            <div class="panels" style="height: @GetHeight();">
+            <div class="panels" style="min-height: @GetHeight();">
                 @foreach (var panel in Steps)
                 {
                     <div class="panel @(panel.IsActive ? "movingIn" : panel.MovementClass)">
@@ -80,7 +76,7 @@
 
     private bool _fixedHeight = true;
 
-    private string GetHeight() => _fixedHeight ? "275px" : "auto";
+    private string GetHeight() => _fixedHeight ? "285px" : "auto";
 
     private List<Step> Steps = new()
     {
