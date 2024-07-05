@@ -9,6 +9,42 @@
     <label for="fixed-height" style="cursor: pointer;">Fixed height</label>
 </div>
 
+<h3 style="text-align: center;">With Wizard and WizardStep components</h3>
+
+<div class="wrapper">
+    <div id="wizard" class="wizard">
+        <Wizard Title="Get started with Javascript!"
+                SubTitle="Start with 3 simple steps."
+                FixedHeight="_fixedHeight">
+            <WizardStep>
+                <header class="panel__header">
+                    <h2 class="panel__title">Create a Github account</h2>
+                    <p class="panel__subheading">With github you can show your projects and find new things everyday!</p>
+                </header>
+                <p class="panel__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p class="panel__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </WizardStep>
+            <WizardStep IconClass="fa fa-book">
+                <header class="panel__header">
+                    <h2 class="panel__title">Learn more about pure Javascript.</h2>
+                    <p class="panel__subheading">We have cool frameworks, but none is better then VanillaJS</p>
+                </header>
+                <p class="panel__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p class="panel__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+            </WizardStep>
+            <WizardStep>
+                <header class="panel__header">
+                    <h2 class="panel__title">Stay in touch with the community.</h2>
+                    <p class="panel__subheading">Community is everything, and here we do some crazy stuff.</p>
+                </header>
+                <p class="panel__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+            </WizardStep>
+        </Wizard>
+    </div>
+</div>
+
+<h3 style="text-align: center;">Without components</h3>
+
 <div class="wrapper">
     <div id="wizard" class="wizard">
         <div class="wizard__content">

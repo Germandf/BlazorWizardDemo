@@ -1,0 +1,20 @@
+﻿@code {
+
+    [CascadingParameter]
+    public required Wizard ParentWizard { get; set; }
+
+    [Parameter]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string IconClass { get; set; } = "fa fa-arrow-right";
+
+    public bool IsActive { get; set; }
+    public bool IsCompleted { get; set; }
+    public string? MovementClass { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ParentWizard.AddStep(this);
+    }
+}

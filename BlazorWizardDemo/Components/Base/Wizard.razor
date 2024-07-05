@@ -1,0 +1,123 @@
+﻿<div class="wizard__content">
+    <header class="wizard__header">
+
+        <h1 class="wizard__title">
+            @Title
+        </h1>
+
+        <p class="wizard__subheading">
+            @SubTitle
+        </p>
+
+        <div class="wizard__steps">
+            <nav class="steps">
+                @foreach (var step in _steps)
+                {
+                    <div class="step @(step.IsCompleted ? "-completed" : "")">
+                        <div class="step__content">
+                            @if (_steps.First() == step)
+                            {
+                                <div class="lines">
+                                    <div class="line -background" style="left: -50%; transform: scaleX(1);"></div>
+                                    <div class="line -progress" style="left: -50%; transform: scaleX(1);"></div>
+                                </div>
+                            }
+
+                            <p class="step__number"><i class="@step.IconClass"></i></p>
+                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                            </svg>
+
+                            <div class="lines">
+                                <div class="line -background"></div>
+                                <div class="line -progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </nav>
+        </div>
+    </header>
+
+    <div class="panels" style="min-height: @GetHeight();">
+        @foreach (var panel in _steps)
+        {
+            <div class="panel @(panel.IsActive ? "movingIn" : panel.MovementClass)">
+                @panel.ChildContent
+            </div>
+        }
+    </div>
+
+    <div class="wizard__footer">
+        <button class="button previous" @onclick="Previous">Previous</button>
+        <button class="button next" @onclick="Next">@_nextButtonText</button>
+    </div>
+</div>
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+
+    [Parameter]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public bool FixedHeight { get; set; } = true;
+
+    [Parameter]
+    public required string Title { get; set; }
+
+    [Parameter]
+    public required string SubTitle { get; set; }
+
+    private int _currentStep = 0;
+    private string _nextButtonText => _currentStep == _steps.Count - 1 ? "Conclude!" : "Next";
+    private List<WizardStep> _steps { get; set; } = new();
+    private int _currentStepIndex { get; set; } = 0;
+
+    private string GetHeight() => FixedHeight ? "285px" : "auto";
+
+    public void AddStep(WizardStep step)
+    {
+        _steps.Add(step);
+        UpdateSteps();
+        StateHasChanged();
+    }
+
+    private void Next()
+    {
+        if (_currentStep < _steps.Count - 1)
+        {
+            _steps[_currentStep].IsCompleted = true;
+            _currentStep++;
+            UpdateSteps();
+        }
+    }
+
+    private void Previous()
+    {
+        if (_currentStep > 0)
+        {
+            _currentStep--;
+            _steps[_currentStep].IsCompleted = false;
+            UpdateSteps();
+        }
+    }
+
+    private void UpdateSteps()
+    {
+        for (int i = 0; i < _steps.Count; i++)
+        {
+            _steps[i].IsActive = i == _currentStep;
+            _steps[i].MovementClass = i < _currentStep ? "movingOutBackward" : i > _currentStep ? "movingOutFoward" : null;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        UpdateSteps();
+    }
+}
