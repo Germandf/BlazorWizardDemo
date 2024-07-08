@@ -56,16 +56,15 @@ body, html {
 }
 
 .wrapper {
-    position: relative;
     margin: 20px;
 }
 
-.wizard {
+.box {
     max-width: 620px;
     margin: 0 auto;
 }
 
-.wizard__header {
+.wizard-header {
     position: relative;
     color: #FFF;
     padding: 50px;
@@ -74,18 +73,15 @@ body, html {
     border-bottom-right-radius: 0;
     text-align: center;
     background-color: #4D637B;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
-.wizard__title {
+.wizard-title {
     font-size: 1.5rem;
     line-height: 2rem;
     margin: 0;
 }
 
-.wizard__subheading {
+.wizard-subheading {
     text-transform: uppercase;
     margin: 0;
     font-size: 0.8rem;
@@ -93,11 +89,7 @@ body, html {
     letter-spacing: 2px;
 }
 
-    .wizard__subheading span {
-        font-weight: 600;
-    }
-
-.wizard__steps {
+.wizard-steps {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -108,13 +100,13 @@ body, html {
     padding: 12px 0;
 }
 
-.wizard__footer {
+.wizard-footer {
     padding: 10px;
     padding-top: 0;
     text-align: center;
 }
 
-.wizard__content {
+.wizard-content {
     background: #FFF;
     box-shadow: 0px 0px 10px #c5c5c5;
     border-radius: 5px;
@@ -129,26 +121,16 @@ body, html {
     transition: all 0.5s ease;
 }
 
-    .line.-end {
-        left: 50%;
-        background: #5094de;
-        width: 50%;
-    }
-
-    .line.-background {
+    .line.background {
         background: #c3c3c3;
         width: 100%;
     }
 
-    .line.-progress {
+    .line.progress {
         background: #5094de;
         width: 100%;
         transform: scaleX(0);
         transform-origin: left center;
-    }
-
-    .line.-in-progress {
-        transform: scaleX(1);
     }
 
 .panels {
@@ -167,31 +149,15 @@ body, html {
     box-sizing: border-box;
 }
 
-.panel__header {
-    margin-bottom: 30px;
-}
-
-.panel__title {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    margin: 0;
-}
-
-.panel__subheading {
-    font-size: 0.9rem;
-    line-height: 1.2rem;
-    margin: 0;
-}
-
-.panel.movingOutBackward {
+.panel.moving-out-backward {
     transform: translateX(-100%);
 }
 
-.panel.movingOutFoward {
+.panel.moving-out-forward {
     transform: translateX(100%);
 }
 
-.panel.movingIn {
+.panel.moving-in {
     transform: translateX(0);
     position: relative;
 }
@@ -212,12 +178,12 @@ body, html {
     border-radius: 5px;
 }
 
-.step__content {
+.step-content {
     position: relative;
     z-index: 2;
 }
 
-.step__number {
+.step-number {
     font-size: 1.3rem;
     color: #676767;
     background: #FFF;
@@ -233,20 +199,20 @@ body, html {
     z-index: 5;
 }
 
-.step.-completed .step__number {
+.step.completed .step-number {
     opacity: 0;
 }
 
-.step.-completed .checkmark {
+.step.completed .checkmark {
     z-index: 0;
     animation: fill 0.4s ease-in-out forwards, scale 0.3s ease-in-out 0.6s both;
 }
 
-.step.-completed .checkmark__check {
+.step.completed .checkmark-check {
     animation: stroke 0.5s linear 0.4s forwards;
 }
 
-.step.-completed .line {
+.step.completed .line {
     transform: scaleX(1);
 }
 
@@ -269,7 +235,7 @@ body, html {
     z-index: -1;
 }
 
-.checkmark__circle {
+.checkmark-circle {
     stroke-dasharray: 166;
     stroke-dashoffset: 166;
     stroke-width: 8;
@@ -279,7 +245,7 @@ body, html {
     animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 
-.checkmark__check {
+.checkmark-check {
     transform-origin: 50% 50%;
     stroke-dasharray: 40;
     stroke-dashoffset: 40;
@@ -295,9 +261,6 @@ body, html {
     color: #FFF;
     padding: 10px 15px;
     border: none;
-    outline: none;
-    display: inline-block;
-    transition: all 0.3s;
 }
 
     .button:hover {
@@ -307,11 +270,6 @@ body, html {
     .button.previous, .button.next {
         margin: 0 4px;
         min-width: 115px;
-    }
-
-    .button.disabled {
-        background: #c3c3c3;
-        cursor: default;
     }
 
 @keyframes stroke {
