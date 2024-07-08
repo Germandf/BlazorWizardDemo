@@ -272,6 +272,12 @@ body, html {
         min-width: 115px;
     }
 
+    .button:disabled {
+        background: #c3c3c3;
+        color: #FFF;
+        cursor: not-allowed;
+    }
+
 @keyframes stroke {
     to {
         stroke-dashoffset: 0;

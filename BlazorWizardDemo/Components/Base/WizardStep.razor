@@ -9,6 +9,12 @@
     [Parameter]
     public string IconClass { get; set; } = "fa fa-arrow-right";
 
+    [Parameter]
+    public bool EnablePrevious { get; set; }
+
+    [Parameter]
+    public Func<Task<bool>>? OnNext { get; set; }
+
     public bool IsActive { get; set; }
     public bool IsCompleted { get; set; }
     public string? MovementClass { get; set; }
