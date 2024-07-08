@@ -9,8 +9,6 @@
     <label for="fixed-height" style="cursor: pointer;">Fixed height</label>
 </div>
 
-<h3 style="text-align: center;">With Wizard and WizardStep components</h3>
-
 <div class="wrapper">
     <div id="wizard" class="wizard">
         <Wizard Title="Get started with Javascript!"
@@ -43,158 +41,10 @@
     </div>
 </div>
 
-<h3 style="text-align: center;">Without components</h3>
-
-<div class="wrapper">
-    <div id="wizard" class="wizard">
-        <div class="wizard__content">
-            <header class="wizard__header">
-                <h1 class="wizard__title">Get started with Javascript!</h1>
-                <p class="wizard__subheading">Start with <span>3</span> simple steps.</p>
-
-                <div class="wizard__steps">
-                    <nav class="steps">
-                        @foreach (var step in Steps)
-                        {
-                            <div class="step @(step.IsCompleted ? "-completed" : "")">
-                                <div class="step__content">
-                                    @if (Steps.First() == step)
-                                    {
-                                        <div class="lines">
-                                            <div class="line -background" style="left: -50%; transform: scaleX(1);"></div>
-                                            <div class="line -progress" style="left: -50%; transform: scaleX(1);"></div>
-                                        </div>
-                                    }
-
-                                    <p class="step__number"><i class="@step.IconClass"></i></p>
-                                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
-                                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                                    </svg>
-
-                                    <div class="lines">
-                                        <div class="line -background"></div>
-                                        <div class="line -progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </nav>
-                </div>
-            </header>
-
-            <div class="panels" style="min-height: @GetHeight();">
-                @foreach (var panel in Steps)
-                {
-                    <div class="panel @(panel.IsActive ? "movingIn" : panel.MovementClass)">
-                        <header class="panel__header">
-                            <h2 class="panel__title">@panel.Title</h2>
-                            <p class="panel__subheading">@panel.Subheading</p>
-                        </header>
-
-                        @foreach (var content in panel.Contents)
-                        {
-                            <p class="panel__content">@content</p>
-                        }
-                    </div>
-                }
-            </div>
-
-            <div class="wizard__footer">
-                <button class="button previous" @onclick="Previous">Previous</button>
-                <button class="button next" @onclick="Next">@NextButtonText</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 @code {
 
     private bool _fixedHeight = true;
 
     private string GetHeight() => _fixedHeight ? "285px" : "auto";
 
-    private List<Step> Steps = new()
-    {
-        new()
-        {
-            Title = "Create a Github account",
-            Subheading = "With github you can show your projects and find new things everyday!",
-            Contents = new()
-            {
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            },
-        },
-        new()
-        {
-            IconClass = "fa fa-book",
-            Title = "Learn more about pure Javascript.",
-            Subheading = "We have cool frameworks, but none is better then VanillaJS",
-            Contents = new()
-            {
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum."
-            },
-        },
-        new()
-        {
-            Title = "Stay in touch with the community.",
-            Subheading = "Community is everything, and here we do some crazy stuff.",
-            Contents = new()
-            {
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum."
-            },
-        },
-    };
-
-    private int currentStep = 0;
-
-    private string NextButtonText => currentStep == Steps.Count - 1 ? "Conclude!" : "Next";
-
-    private void Next()
-    {
-        if (currentStep < Steps.Count - 1)
-        {
-            Steps[currentStep].IsCompleted = true;
-            currentStep++;
-            UpdateSteps();
-        }
-    }
-
-    private void Previous()
-    {
-        if (currentStep > 0)
-        {
-            currentStep--;
-            Steps[currentStep].IsCompleted = false;
-            UpdateSteps();
-        }
-    }
-
-    private void UpdateSteps()
-    {
-        for (int i = 0; i < Steps.Count; i++)
-        {
-            Steps[i].IsActive = i == currentStep;
-            Steps[i].MovementClass = i < currentStep ? "movingOutBackward" : i > currentStep ? "movingOutFoward" : null;
-        }
-    }
-
-    protected override void OnInitialized()
-    {
-        UpdateSteps();
-    }
-
-    public class Step
-    {
-        public required string Title { get; set; }
-        public required string Subheading { get; set; }
-        public required List<string> Contents { get; set; }
-
-        public string IconClass { get; set; } = "fa fa-arrow-right";
-        public bool IsActive { get; set; }
-        public bool IsCompleted { get; set; }
-        public string? MovementClass { get; set; }
-    }
 }
