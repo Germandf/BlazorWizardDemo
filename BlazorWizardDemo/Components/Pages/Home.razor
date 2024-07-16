@@ -13,7 +13,7 @@
     <div class="box">
         <Wizard Title="Get started with Javascript!"
                 SubTitle="Start with 3 simple steps."
-                FixedHeight="_fixedHeight">
+                Height="@(_fixedHeight ? "315px" : null)">
             <WizardStep>
                 <h2>Create a Github account</h2>
                 <p>With github you can show your projects and find new things everyday!</p>

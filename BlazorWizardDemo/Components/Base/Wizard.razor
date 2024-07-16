@@ -37,7 +37,7 @@
         </div>
     </header>
 
-    <div class="panels" style="min-height: @GetHeight();">
+    <div class="panels" style="height: @GetHeight();">
         @foreach (var panel in _steps)
         {
             <div class="panel @(panel.IsActive ? "moving-in" : panel.MovementClass)">
@@ -70,7 +70,7 @@
     public required RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public bool FixedHeight { get; set; } = true;
+    public string? Height { get; set; }
 
     [Parameter]
     public required string Title { get; set; }
@@ -83,7 +83,7 @@
     private List<WizardStep> _steps { get; set; } = new();
     private bool _isLoading;
 
-    private string GetHeight() => FixedHeight ? "315px" : "auto";
+    private string GetHeight() => string.IsNullOrEmpty(Height) ? "auto" : Height;
 
     public void AddStep(WizardStep step)
     {
