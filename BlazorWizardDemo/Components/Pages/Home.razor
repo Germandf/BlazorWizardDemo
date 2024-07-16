@@ -4,40 +4,59 @@
 
 <PageTitle>Home</PageTitle>
 
-<div>
-    <InputCheckbox id="fixed-height" @bind-Value="_fixedHeight" />
-    <label for="fixed-height" style="cursor: pointer;">Fixed height</label>
+<div style="margin: 10px auto; width: fit-content;">
+    <div style="margin-bottom: 10px;">
+        <label for="title" style="cursor: pointer; display: block;">Title</label>
+        <input id="title" @bind-value="@_title" @bind-value:event="oninput" />
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label for="sub-title" style="cursor: pointer; display: block;">SubTitle</label>
+        <input id="sub-title" @bind-value="@_subTitle" @bind-value:event="oninput" />
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <InputCheckbox id="fixed-height" @bind-Value="_fixedHeight" />
+        <label for="fixed-height" style="cursor: pointer;">Fixed height</label>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <InputCheckbox id="fixed-max-width" @bind-Value="_fixedMaxWidth" />
+        <label for="fixed-max-width" style="cursor: pointer;">Fixed max width</label>
+    </div>
 </div>
 
 <div class="wrapper">
-    <div class="box">
-        <Wizard Title="Get started with Javascript!"
-                SubTitle="Start with 3 simple steps."
-                Height="@(_fixedHeight ? "315px" : null)">
-            <WizardStep>
-                <h2>Create a Github account</h2>
-                <p>With github you can show your projects and find new things everyday!</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </WizardStep>
-            <WizardStep IconClass="fa fa-book" EnablePrevious OnNext="AsyncCall">
-                <h2>Learn more about pure Javascript.</h2>
-                <p>We have cool frameworks, but none is better then VanillaJS</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
-            </WizardStep>
-            <WizardStep>
-                <h2>Stay in touch with the community.</h2>
-                <p>Community is everything, and here we do some crazy stuff.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
-            </WizardStep>
-        </Wizard>
-    </div>
+    <Wizard Title="@_title"
+            SubTitle="@_subTitle"
+            Height="@(_fixedHeight ? "315px" : null)"
+            MaxWidth="@(_fixedMaxWidth ? "620px" : null)">
+        <WizardStep>
+            <h2>Create a Github account</h2>
+            <p>With github you can show your projects and find new things everyday!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </WizardStep>
+        <WizardStep IconClass="fa fa-book" EnablePrevious OnNext="AsyncCall">
+            <h2>Learn more about pure Javascript.</h2>
+            <p>We have cool frameworks, but none is better then VanillaJS</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+        </WizardStep>
+        <WizardStep>
+            <h2>Stay in touch with the community.</h2>
+            <p>Community is everything, and here we do some crazy stuff.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna culpa qui officia deserunt mollit anim id est laborum.</p>
+        </WizardStep>
+    </Wizard>
 </div>
 
 @code {
 
+    private string _title = "Get started with Javascript!";
+    private string _subTitle = "Start with 3 simple steps.";
     private bool _fixedHeight = true;
+    private bool _fixedMaxWidth = true;
 
     private async Task<bool> AsyncCall()
     {

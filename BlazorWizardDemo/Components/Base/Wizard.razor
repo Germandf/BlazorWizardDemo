@@ -1,4 +1,4 @@
-﻿<div class="wizard-content">
+﻿<div class="wizard-content" style="max-width: @GetMaxWidth();">
     <header class="wizard-header">
         <h1 class="wizard-title">
             @Title
@@ -73,6 +73,9 @@
     public string? Height { get; set; }
 
     [Parameter]
+    public string? MaxWidth { get; set; }
+
+    [Parameter]
     public required string Title { get; set; }
 
     [Parameter]
@@ -84,6 +87,8 @@
     private bool _isLoading;
 
     private string GetHeight() => string.IsNullOrEmpty(Height) ? "auto" : Height;
+
+    private string GetMaxWidth() => string.IsNullOrEmpty(MaxWidth) ? "auto" : MaxWidth;
 
     public void AddStep(WizardStep step)
     {
