@@ -40,10 +40,13 @@
     <div class="panels" style="height: @GetHeight();">
         @foreach (var panel in _steps)
         {
-            <div class="panel @(panel.IsActive ? "moving-in" : panel.MovementClass)">
+            <div class="panel @(panel.IsActive && !panel.IsCompleted ? "moving-in" : panel.MovementClass)">
                 @panel.ChildContent
             </div>
         }
+        <div class="panel @(_steps.All(x => x.IsCompleted) ? "moving-in" : "moving-out-forward")">
+            @Completed
+        </div>
     </div>
 
     <div class="wizard-footer">
@@ -61,25 +64,28 @@
 </div>
 
 <CascadingValue Value="this">
-    @ChildContent
+    @Steps
 </CascadingValue>
 
 @code {
 
-    [Parameter]
-    public required RenderFragment ChildContent { get; set; }
+    [Parameter, EditorRequired]
+    public required RenderFragment Steps { get; set; }
+
+    [Parameter, EditorRequired]
+    public required RenderFragment Completed { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Title { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string SubTitle { get; set; }
 
     [Parameter]
     public string? Height { get; set; }
 
     [Parameter]
     public string? MaxWidth { get; set; }
-
-    [Parameter]
-    public required string Title { get; set; }
-
-    [Parameter]
-    public required string SubTitle { get; set; }
 
     private int _currentStep = 0;
     private string _nextButtonText => _isLoading ? "Loading..." : _currentStep == _steps.Count - 1 ? "Finalize" : "Next";
@@ -133,7 +139,7 @@
         for (int i = 0; i < _steps.Count; i++)
         {
             _steps[i].IsActive = i == _currentStep;
-            _steps[i].MovementClass = i < _currentStep ? "moving-out-backward" : i > _currentStep ? "moving-out-forward" : null;
+            _steps[i].MovementClass = i <= _currentStep ? "moving-out-backward" : i > _currentStep ? "moving-out-forward" : null;
         }
     }
 
