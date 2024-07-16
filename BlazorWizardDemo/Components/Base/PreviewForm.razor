@@ -1,0 +1,68 @@
+﻿<div class="preview-form">
+    <div class="mb-2">
+        <label for="title">Title</label><br />
+        <input id="title"
+               @bind="@Title"
+               @bind:event="oninput"
+               @bind:after="OnTitleChanged" />
+    </div>
+    <div class="mb-2">
+        <label for="sub-title">SubTitle</label><br />
+        <input id="sub-title"
+               @bind="SubTitle"
+               @bind:event="oninput"
+               @bind:after="OnSubTitleChanged" />
+    </div>
+    <div class="mb-2">
+        <input type="checkbox"
+               id="fixed-height"
+               @bind="FixedHeight"
+               @bind:event="oninput"
+               @bind:after="OnFixedHeightChanged" />
+        <label for="fixed-height">Fixed height</label>
+    </div>
+    <div class="mb-2">
+        <input type="checkbox"
+               id="fixed-max-width"
+               @bind="FixedMaxWidth"
+               @bind:event="oninput"
+               @bind:after="OnFixedMaxWidthChanged" />
+        <label for="fixed-max-width">Fixed max width</label>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> TitleChanged { get; set; }
+
+    private void OnTitleChanged() => TitleChanged.InvokeAsync(Title);
+
+    [Parameter]
+    public string SubTitle { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> SubTitleChanged { get; set; }
+
+    private void OnSubTitleChanged() => SubTitleChanged.InvokeAsync(SubTitle);
+
+    [Parameter]
+    public bool FixedHeight { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> FixedHeightChanged { get; set; }
+
+    private void OnFixedHeightChanged() => FixedHeightChanged.InvokeAsync(FixedHeight);
+
+    [Parameter]
+    public bool FixedMaxWidth { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> FixedMaxWidthChanged { get; set; }
+
+    private void OnFixedMaxWidthChanged() => FixedMaxWidthChanged.InvokeAsync(FixedMaxWidth);
+
+}

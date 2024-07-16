@@ -55,8 +55,17 @@ body, html {
     color: #676767;
 }
 
-.wrapper {
-    margin: 20px;
+label {
+    cursor: pointer;
+}
+
+.preview-form {
+    margin: 10px auto;
+    width: fit-content;
+}
+
+.mb-2{
+    margin-bottom: 10px;
 }
 
 .wizard-header {
