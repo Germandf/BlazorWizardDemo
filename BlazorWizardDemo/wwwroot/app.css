@@ -138,6 +138,11 @@ label {
         transform-origin: left center;
     }
 
+    .line.left {
+        left: -50%;
+        transform: scaleX(1);
+    }
+
 .panels {
     position: relative;
     overflow: hidden;
