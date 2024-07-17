@@ -170,8 +170,12 @@ label {
 .steps {
     position: relative;
     display: flex;
-    flex: 0 1 auto;
     color: #fff;
+    gap: 20px;
+    padding: 0 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    pointer-events: none;
 }
 
 .step {
@@ -219,10 +223,6 @@ label {
 
 .step.completed .line {
     transform: scaleX(1);
-}
-
-.step:last-child .line {
-    width: 50%;
 }
 
 .checkmark {

@@ -1,4 +1,6 @@
-﻿<div class="wizard-content" style="max-width: @GetMaxWidth();">
+﻿@inject IJSRuntime JS
+
+<div class="wizard-content" style="max-width: @GetMaxWidth();">
     <header class="wizard-header">
         <h1 class="wizard-title">
             @Title
@@ -7,7 +9,7 @@
             @SubTitle
         </p>
         <div class="wizard-steps">
-            <nav class="steps">
+            <nav class="steps" @ref="stepsContainer">
                 @foreach (var step in _steps)
                 {
                     <div class="step @(step.IsCompleted ? "completed" : "")">
@@ -96,6 +98,8 @@
 
     private string GetMaxWidth() => string.IsNullOrEmpty(MaxWidth) ? "auto" : MaxWidth;
 
+    private ElementReference stepsContainer;
+
     public void AddStep(WizardStep step)
     {
         _steps.Add(step);
@@ -122,15 +126,17 @@
             _currentStep++;
         }
         UpdateSteps();
+        await ScrollToCurrentStep();
     }
 
-    private void Previous()
+    private async Task Previous()
     {
         if (_currentStep > 0)
         {
             _currentStep--;
             _steps[_currentStep].IsCompleted = false;
             UpdateSteps();
+            await ScrollToCurrentStep();
         }
     }
 
@@ -147,4 +153,13 @@
     {
         UpdateSteps();
     }
+
+    private async Task ScrollToCurrentStep()
+    {
+        var stepsToWait = 3;
+        if (_currentStep <= stepsToWait) return;
+        var scrollLeft = (_currentStep - stepsToWait) * 70;
+        await JS.InvokeVoidAsync("window.scrollToElement", stepsContainer, scrollLeft);
+    }
+
 }
