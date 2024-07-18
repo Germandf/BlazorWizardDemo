@@ -53,14 +53,14 @@
         </div>
         <div class="wizard-buttons">
             <button class="button previous"
-                    disabled="@(_currentStep < 1 || _steps[_currentStep].EnablePrevious is false)"
+                    disabled="@GetPreviousDisabled()"
                     @onclick="Previous">
                 Previous
             </button>
             <button class="button next"
-                    disabled="@(_isLoading || _steps.All(x => x.IsCompleted))"
+                    disabled="@GetNextDisabled()"
                     @onclick="Next">
-                @_nextButtonText
+                @GetNextText()
             </button>
         </div>
     </div>
@@ -90,9 +90,9 @@
     [Parameter]
     public string? MaxWidth { get; set; }
 
-    private int _currentStep = 0;
-    private string _nextButtonText => _isLoading ? "Loading..." : _currentStep == _steps.Count - 1 ? "Finalize" : "Next";
     private List<WizardStep> _steps { get; set; } = new();
+    private ElementReference _stepsElement;
+    private int _currentStep = 0;
     private bool _isLoading;
 
     private string GetMinHeight() => string.IsNullOrEmpty(MinHeight) ? "auto" : MinHeight;
@@ -101,7 +101,16 @@
 
     private string? GetLastClass(WizardStep step) => _steps.Last() == step ? "right" : null;
 
-    private ElementReference _stepsElement;
+    private bool GetPreviousDisabled()
+    {
+        if (_isLoading || _currentStep < 1) return true;
+        var step = _steps[_currentStep];
+        return step.IsCompleted || step.EnablePrevious is false;
+    }
+
+    private bool GetNextDisabled() => _isLoading || _steps.All(x => x.IsCompleted);
+
+    private string GetNextText() => _isLoading ? "Loading..." : _currentStep == _steps.Count - 1 ? "Finalize" : "Next";
 
     public void AddStep(WizardStep step)
     {
