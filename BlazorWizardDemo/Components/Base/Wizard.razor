@@ -171,6 +171,12 @@
         try
         {
             await ScrollToCurrentStepIcon();
+
+            // It helps prevent a race condition the first time, provoking that the scroll is not done.
+            // 200 would be enough, but 300 is safer.
+            // Awaiting the delay before the scroll icon does not work.
+            await Task.Delay(300);
+
             await ScrollToCurrentStepContent();
         }
         catch
