@@ -14,12 +14,12 @@
         MinHeight="@(_fixedMinHeight ? "390px" : null)"
         MaxWidth="@(_fixedMaxWidth ? "620px" : null)">
     <Steps>
-        <WizardStep>
+        <WizardStep EnablePrevious>
             <h2>Create a Github account.</h2>
             <p>With GitHub, you can showcase your projects and discover new things every day!</p>
             <LoremIpsum />
         </WizardStep>
-        <WizardStep IconClass="fa fa-book">
+        <WizardStep EnablePrevious IconClass="fa fa-book">
             <h2>Learn more about pure Javascript.</h2>
             <p>We have cool frameworks, but none is better than VanillaJS.</p>
             <LoremIpsum />
@@ -50,21 +50,19 @@
             <LoremIpsum />
             <LoremIpsum />
         </WizardStep>
-        <WizardStep EnablePrevious>
-            <h2>Join a Local Meetup Group.</h2>
-            <p>Find and join local meetups or online groups that share your tech interests.</p>
-            <LoremIpsum />
+        <WizardStep EnablePrevious OnNext="userInfoForm.Validate">
+            <h2>Provide Your Details</h2>
+            <p>Please fill out the form below with your information:</p>
+            <UserInfoForm @ref="userInfoForm" />
         </WizardStep>
-        <WizardStep>
-            <h2>Contribute to Documentation.</h2>
-            <p>Improving documentation helps others and enhances your understanding of the project.</p>
-            <LoremIpsum />
-            <LoremIpsum />
-        </WizardStep>
-        <WizardStep OnNext="AsyncCall">
-            <h2>Build Your Personal Brand.</h2>
-            <p>Create a personal blog or portfolio to showcase your projects and share your knowledge.</p>
-            <LoremIpsum />
+        <WizardStep EnablePrevious OnNext="AsyncCall">
+            <h2>Confirm Your Details</h2>
+            <p>Here is the information you provided:</p>
+            <ul>
+                <li><strong>GitHub Username:</strong> @userInfoForm.Info.GitHubUsername</li>
+                <li><strong>Experience Level:</strong> @userInfoForm.Info.ExperienceLevel</li>
+                <li><strong>Interests:</strong> @userInfoForm.Info.Interests</li>
+            </ul>
         </WizardStep>
     </Steps>
     <Completed>
@@ -79,11 +77,12 @@
     private string _subTitle = "Start with 3 simple steps.";
     private bool _fixedMinHeight = true;
     private bool _fixedMaxWidth = true;
+    private UserInfoForm userInfoForm = new();
 
     private async Task<bool> AsyncCall()
     {
         await Task.Delay(1000);
         return true;
     }
-
+    
 }

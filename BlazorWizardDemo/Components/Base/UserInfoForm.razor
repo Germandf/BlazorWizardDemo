@@ -1,0 +1,51 @@
+﻿<EditForm EditContext="_editContext">
+    <DataAnnotationsValidator />
+    <div>
+        <label for="githubUsername">GitHub Username:</label>
+        <InputText id="githubUsername" @bind-Value="Info.GitHubUsername" />
+        <ValidationMessage For="@(() => Info.GitHubUsername)" />
+    </div>
+    <div>
+        <label for="experienceLevel">Experience Level:</label>
+        <InputSelect id="experienceLevel" @bind-Value="Info.ExperienceLevel">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => Info.ExperienceLevel)" />
+    </div>
+    <div>
+        <label for="interests">Interests:</label>
+        <InputTextArea id="interests" @bind-Value="Info.Interests" />
+        <ValidationMessage For="@(() => Info.Interests)" />
+    </div>
+</EditForm>
+
+@code {
+
+    public UserInfo Info = new UserInfo();
+
+    private EditContext _editContext = null!;
+
+    protected override void OnInitialized()
+    {
+        _editContext = new EditContext(Info);
+    }
+
+    public Task<bool> Validate()
+    {
+        return Task.FromResult(_editContext.Validate());
+    }
+
+    public class UserInfo
+    {
+        [Required(ErrorMessage = "GitHub Username is required.")]
+        public string GitHubUsername { get; set; } = "";
+
+        [Required(ErrorMessage = "Experience Level is required.")]
+        public string ExperienceLevel { get; set; } = "";
+
+        public string Interests { get; set; } = "";
+    }
+
+}
