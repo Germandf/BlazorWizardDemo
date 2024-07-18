@@ -6,12 +6,12 @@
 
 <PreviewForm @bind-Title="_title"
              @bind-SubTitle="_subTitle"
-             @bind-FixedHeight="_fixedHeight"
+             @bind-FixedMinHeight="_fixedMinHeight"
              @bind-FixedMaxWidth="_fixedMaxWidth" />
 
 <Wizard Title="@_title"
         SubTitle="@_subTitle"
-        Height="@(_fixedHeight ? "390px" : null)"
+        MinHeight="@(_fixedMinHeight ? "390px" : null)"
         MaxWidth="@(_fixedMaxWidth ? "620px" : null)">
     <Steps>
         <WizardStep>
@@ -70,7 +70,7 @@
 
     private string _title = "Get started with Javascript!";
     private string _subTitle = "Start with 3 simple steps.";
-    private bool _fixedHeight = true;
+    private bool _fixedMinHeight = true;
     private bool _fixedMaxWidth = true;
 
     private async Task<bool> AsyncCall()

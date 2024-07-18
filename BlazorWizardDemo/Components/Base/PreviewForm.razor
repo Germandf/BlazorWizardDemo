@@ -15,11 +15,11 @@
     </div>
     <div class="mb-2">
         <input type="checkbox"
-               id="fixed-height"
-               @bind="FixedHeight"
+               id="fixed-min-height"
+               @bind="FixedMinHeight"
                @bind:event="oninput"
-               @bind:after="OnFixedHeightChanged" />
-        <label for="fixed-height">Fixed height</label>
+               @bind:after="OnFixedMinHeightChanged" />
+        <label for="fixed-min-height">Fixed min height</label>
     </div>
     <div class="mb-2">
         <input type="checkbox"
@@ -50,12 +50,12 @@
     private void OnSubTitleChanged() => SubTitleChanged.InvokeAsync(SubTitle);
 
     [Parameter]
-    public bool FixedHeight { get; set; }
+    public bool FixedMinHeight { get; set; }
 
     [Parameter]
-    public EventCallback<bool> FixedHeightChanged { get; set; }
+    public EventCallback<bool> FixedMinHeightChanged { get; set; }
 
-    private void OnFixedHeightChanged() => FixedHeightChanged.InvokeAsync(FixedHeight);
+    private void OnFixedMinHeightChanged() => FixedMinHeightChanged.InvokeAsync(FixedMinHeight);
 
     [Parameter]
     public bool FixedMaxWidth { get; set; }

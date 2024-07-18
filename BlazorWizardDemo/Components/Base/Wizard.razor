@@ -35,7 +35,7 @@
         </div>
     </header>
 
-    <div class="panels" style="height: @GetHeight();">
+    <div class="panels" style="min-height: @GetMinHeight();">
         @foreach (var panel in _steps)
         {
             <div class="panel @(panel.IsActive && !panel.IsCompleted ? "moving-in" : panel.MovementClass)">
@@ -85,7 +85,7 @@
     public required string SubTitle { get; set; }
 
     [Parameter]
-    public string? Height { get; set; }
+    public string? MinHeight { get; set; }
 
     [Parameter]
     public string? MaxWidth { get; set; }
@@ -95,7 +95,7 @@
     private List<WizardStep> _steps { get; set; } = new();
     private bool _isLoading;
 
-    private string GetHeight() => string.IsNullOrEmpty(Height) ? "auto" : Height;
+    private string GetMinHeight() => string.IsNullOrEmpty(MinHeight) ? "auto" : MinHeight;
 
     private string GetMaxWidth() => string.IsNullOrEmpty(MaxWidth) ? "auto" : MaxWidth;
 
