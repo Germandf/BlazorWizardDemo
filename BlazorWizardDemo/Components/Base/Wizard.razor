@@ -9,7 +9,7 @@
             @SubTitle
         </p>
         <div class="wizard-steps">
-            <nav class="steps" @ref="stepsContainer">
+            <nav class="steps" @ref="_stepsElement">
                 @foreach (var step in _steps)
                 {
                     <div class="step @(step.IsCompleted ? "completed" : "")">
@@ -35,7 +35,7 @@
         </div>
     </header>
 
-    <div class="panels" style="min-height: @GetMinHeight();">
+    <div class="panels" style="min-height: @GetMinHeight()">
         @foreach (var panel in _steps)
         {
             <div class="panel @(panel.IsActive && !panel.IsCompleted ? "moving-in" : panel.MovementClass)">
@@ -101,7 +101,7 @@
 
     private string? GetLastClass(WizardStep step) => _steps.Last() == step ? "right" : null;
 
-    private ElementReference stepsContainer;
+    private ElementReference _stepsElement;
 
     public void AddStep(WizardStep step)
     {
@@ -129,7 +129,7 @@
             _currentStep++;
         }
         UpdateSteps();
-        await ScrollToCurrentStep();
+        await HandleScrolls();
     }
 
     private async Task Previous()
@@ -139,7 +139,7 @@
             _currentStep--;
             _steps[_currentStep].IsCompleted = false;
             UpdateSteps();
-            await ScrollToCurrentStep();
+            await HandleScrolls();
         }
     }
 
@@ -157,12 +157,30 @@
         UpdateSteps();
     }
 
-    private async Task ScrollToCurrentStep()
+    private async Task HandleScrolls()
+    {
+        try
+        {
+            await ScrollToCurrentStepIcon();
+            await ScrollToCurrentStepContent();
+        }
+        catch
+        {
+        }
+    }
+
+    private async Task ScrollToCurrentStepIcon()
     {
         var stepsToWait = 3;
         if (_currentStep <= stepsToWait) return;
-        var scrollLeft = (_currentStep - stepsToWait) * 70;
-        await JS.InvokeVoidAsync("window.scrollToElement", stepsContainer, scrollLeft);
+        var pxsToScroll = (_currentStep - stepsToWait) * 70;
+        await JS.InvokeVoidAsync("scrollLeft", _stepsElement, pxsToScroll);
     }
 
+    private async Task ScrollToCurrentStepContent()
+    {
+        var isInViewport = await JS.InvokeAsync<bool>("isElementInViewport", _stepsElement);
+        if (!isInViewport)
+            await JS.InvokeVoidAsync("scrollToElementStart", _stepsElement);
+    }
 }

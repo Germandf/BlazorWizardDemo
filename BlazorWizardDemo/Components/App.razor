@@ -15,10 +15,22 @@
     <Routes @rendermode="InteractiveServer" />
     <script src="_framework/blazor.web.js"></script>
     <script>
-        window.scrollToElement = (element, left) => {
+        window.scrollLeft = (element, left) => {
             if (element) {
                 element.scrollTo({ left: left, behavior: 'smooth' });
             }
+        };
+
+        window.isElementInViewport = function (element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+            );
+        };
+
+        window.scrollToElementStart = function (element) {
+            element.scrollIntoView({ block: 'start', behavior: 'smooth' });
         };
     </script>
 </body>
