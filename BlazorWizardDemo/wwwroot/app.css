@@ -101,9 +101,27 @@ label {
 }
 
 .wizard-footer {
-    padding: 10px;
+    padding: 40px;
     padding-top: 0;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (min-width: 768px) {
+    .wizard-footer {
+        flex-direction: row;
+    }
+}
+
+.steps-count {
+    align-self: center;
+}
+
+.wizard-buttons {
+    display: flex;
+    justify-content: center;
 }
 
 .wizard-content {

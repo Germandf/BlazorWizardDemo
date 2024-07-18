@@ -48,16 +48,21 @@
     </div>
 
     <div class="wizard-footer">
-        <button class="button previous"
-                disabled="@(_currentStep < 1 || _steps[_currentStep].EnablePrevious is false)"
-                @onclick="Previous">
-            Previous
-        </button>
-        <button class="button next"
-                disabled="@(_isLoading || _steps.All(x => x.IsCompleted))"
-                @onclick="Next">
-            @_nextButtonText
-        </button>
+        <div class="steps-count">
+            Step @(_currentStep + 1) of @_steps.Count
+        </div>
+        <div class="wizard-buttons">
+            <button class="button previous"
+                    disabled="@(_currentStep < 1 || _steps[_currentStep].EnablePrevious is false)"
+                    @onclick="Previous">
+                Previous
+            </button>
+            <button class="button next"
+                    disabled="@(_isLoading || _steps.All(x => x.IsCompleted))"
+                    @onclick="Next">
+                @_nextButtonText
+            </button>
+        </div>
     </div>
 </div>
 
