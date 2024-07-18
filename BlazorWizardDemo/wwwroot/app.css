@@ -157,6 +157,11 @@ label {
         transform: scaleX(1);
     }
 
+    .line.right {
+        left: 20px;
+        z-index: -2;
+    }
+
 .panels {
     position: relative;
     overflow: hidden;

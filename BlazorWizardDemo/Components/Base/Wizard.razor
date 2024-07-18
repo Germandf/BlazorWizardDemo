@@ -26,8 +26,8 @@
                                 <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                             </svg>
 
-                            <div class="line background"></div>
-                            <div class="line progress"></div>
+                            <div class="line background @GetLastClass(step)"></div>
+                            <div class="line progress @GetLastClass(step)"></div>
                         </div>
                     </div>
                 }
@@ -98,6 +98,8 @@
     private string GetMinHeight() => string.IsNullOrEmpty(MinHeight) ? "auto" : MinHeight;
 
     private string GetMaxWidth() => string.IsNullOrEmpty(MaxWidth) ? "auto" : MaxWidth;
+
+    private string? GetLastClass(WizardStep step) => _steps.Last() == step ? "right" : null;
 
     private ElementReference stepsContainer;
 
