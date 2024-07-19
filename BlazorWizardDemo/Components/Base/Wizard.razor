@@ -133,11 +133,6 @@
         {
             _steps.Add(step);
         }
-        // In case the current step is the last one and we just added a new step.
-        if (_steps[_currentStep].IsCompleted && HasNextStep())
-        {
-            _currentStep++;
-        }
         UpdateSteps();
         StateHasChanged();
     }
@@ -161,6 +156,10 @@
             {
                 return;
             }
+        }
+        if (_steps[_currentStep].AddsDynamicSteps)
+        {
+            await Task.Yield();
         }
         _steps[_currentStep].IsCompleted = true;
         if (HasNextStep())
