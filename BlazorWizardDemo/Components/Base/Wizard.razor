@@ -49,7 +49,7 @@
 
     <div class="wizard-footer">
         <div class="steps-count">
-            Step @(_currentStep + 1) of @_steps.Count
+            @GetStepCount()
         </div>
         <div class="wizard-buttons">
             <button class="button previous"
@@ -101,6 +101,15 @@
 
     private string? GetLastClass(WizardStep step) => _steps.Last() == step ? "right" : null;
 
+    private string GetStepCount()
+    {
+        var totalSteps = _steps.Count;
+        var currentStep = _currentStep + 1;
+        var addsDynamicSteps = _steps.Any(step => !step.IsCompleted && step.AddsDynamicSteps);
+        var suffix = addsDynamicSteps ? " (...)" : string.Empty;
+        return $"Step {currentStep} of {totalSteps}{suffix}";
+    }
+
     private bool GetPreviousDisabled()
     {
         if (_isLoading || _currentStep < 1) return true;
@@ -110,7 +119,9 @@
 
     private bool GetNextDisabled() => _isLoading || _steps.All(x => x.IsCompleted);
 
-    private string GetNextText() => _isLoading ? "Loading..." : _currentStep == _steps.Count - 1 ? "Finalize" : "Next";
+    private string GetNextText() => _isLoading ? "Loading..." : "Next";
+
+    private bool HasNextStep() => _currentStep < _steps.Count - 1;
 
     public void AddStep(WizardStep step, int? position = null)
     {
@@ -121,6 +132,11 @@
         else
         {
             _steps.Add(step);
+        }
+        // In case the current step is the last one and we just added a new step.
+        if (_steps[_currentStep].IsCompleted && HasNextStep())
+        {
+            _currentStep++;
         }
         UpdateSteps();
         StateHasChanged();
@@ -147,7 +163,7 @@
             }
         }
         _steps[_currentStep].IsCompleted = true;
-        if (_currentStep < _steps.Count - 1)
+        if (HasNextStep())
         {
             _currentStep++;
         }

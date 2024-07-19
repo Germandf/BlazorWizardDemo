@@ -18,7 +18,7 @@
             <h2>Create a Github account.</h2>
             <p>With GitHub, you can showcase your projects and discover new things every day!</p>
         </WizardStep>
-        <WizardStep EnablePrevious IconClass="fa fa-question" OnNext="AddAdditionalSteps">
+        <WizardStep EnablePrevious IconClass="fa fa-question" OnNext="AddAdditionalSteps" AddsDynamicSteps>
             <h2>Add More Steps to Your Journey.</h2>
             <p>You can include additional steps to tailor the process to your needs.</p>
             <AdditionalStepsForm @ref="additionalStepsForm" />
