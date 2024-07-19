@@ -14,7 +14,7 @@
         MinHeight="@(_fixedMinHeight ? "390px" : null)"
         MaxWidth="@(_fixedMaxWidth ? "620px" : null)">
     <Steps>
-        <WizardStep EnablePrevious>
+        <WizardStep>
             <h2>Create a Github account.</h2>
             <p>With GitHub, you can showcase your projects and discover new things every day!</p>
         </WizardStep>
@@ -64,7 +64,7 @@
             <p>Please fill out the form below with your information:</p>
             <UserInfoForm @ref="userInfoForm" />
         </WizardStep>
-        <WizardStep EnablePrevious IconClass="fa fa-paperclip" OnNext="AsyncCall">
+        <WizardStep EnablePrevious IconClass="fa fa-paperclip" OnNext="Submit">
             <h2>Confirm Your Details</h2>
             <p>Here is the information you provided:</p>
             <ul>
@@ -90,15 +90,15 @@
     private UserInfoForm userInfoForm = new();
     private AdditionalStepsForm additionalStepsForm = new();
 
-    private async Task<bool> AsyncCall()
-    {
-        await Task.Delay(1000);
-        return true;
-    }
-
-    private async Task<bool> AddAdditionalSteps()
+    private Task<bool> AddAdditionalSteps()
     {
         _additionalSteps = additionalStepsForm.AdditionalSteps;
+        return Task.FromResult(true);
+    }
+
+    private async Task<bool> Submit()
+    {
+        await Task.Delay(1000);
         return true;
     }
 
