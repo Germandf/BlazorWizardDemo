@@ -112,9 +112,23 @@
 
     private string GetNextText() => _isLoading ? "Loading..." : _currentStep == _steps.Count - 1 ? "Finalize" : "Next";
 
-    public void AddStep(WizardStep step)
+    public void AddStep(WizardStep step, int? position = null)
     {
-        _steps.Add(step);
+        if (position is not null && position >= 0 && position < _steps.Count && _steps[position.Value].IsCompleted is false)
+        {
+            _steps.Insert(position.Value, step);
+        }
+        else
+        {
+            _steps.Add(step);
+        }
+        UpdateSteps();
+        StateHasChanged();
+    }
+
+    public void RemoveStep(WizardStep step)
+    {
+        _steps.Remove(step);
         UpdateSteps();
         StateHasChanged();
     }

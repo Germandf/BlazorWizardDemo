@@ -1,4 +1,6 @@
-﻿@code {
+﻿@implements IDisposable
+
+@code {
 
     [CascadingParameter]
     public required Wizard ParentWizard { get; set; }
@@ -15,12 +17,20 @@
     [Parameter]
     public Func<Task<bool>>? OnNext { get; set; }
 
+    [Parameter]
+    public int? Position { get; set; }
+
     public bool IsActive { get; set; }
     public bool IsCompleted { get; set; }
     public string? MovementClass { get; set; }
 
     protected override void OnInitialized()
     {
-        ParentWizard.AddStep(this);
+        ParentWizard.AddStep(this, Position);
+    }
+
+    public void Dispose()
+    {
+        ParentWizard.RemoveStep(this);
     }
 }

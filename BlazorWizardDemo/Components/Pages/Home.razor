@@ -17,20 +17,29 @@
         <WizardStep EnablePrevious>
             <h2>Create a Github account.</h2>
             <p>With GitHub, you can showcase your projects and discover new things every day!</p>
-            <LoremIpsum />
         </WizardStep>
-        <WizardStep EnablePrevious IconClass="fa fa-book">
+        <WizardStep EnablePrevious IconClass="fa fa-question" OnNext="AddAdditionalSteps">
+            <h2>Add More Steps to Your Journey.</h2>
+            <p>You can include additional steps to tailor the process to your needs.</p>
+            <AdditionalStepsForm @ref="additionalStepsForm" />
+        </WizardStep>
+        @for (var i = 0; i < _additionalSteps; i++)
+        {
+            <WizardStep EnablePrevious IconClass="fa fa-exclamation" Position="i + 2">
+                <h2>Additional Step</h2>
+                <p>Just to make it more interesting.</p>
+                <LoremIpsum />
+            </WizardStep>
+        }
+        <WizardStep EnablePrevious IconClass="fa fa-code">
             <h2>Learn more about pure Javascript.</h2>
             <p>We have cool frameworks, but none is better than VanillaJS.</p>
-            <LoremIpsum />
-            <LoremIpsum />
         </WizardStep>
-        <WizardStep EnablePrevious>
+        <WizardStep EnablePrevious IconClass="fa fa-comments">
             <h2>Stay in touch with the community.</h2>
             <p>Community is everything, and here we do some crazy stuff.</p>
-            <LoremIpsum />
         </WizardStep>
-        <WizardStep EnablePrevious>
+        <WizardStep EnablePrevious IconClass="fa fa-code-branch">
             <h2>Explore Open Source Projects.</h2>
             <p>Contributing to open source projects can significantly enhance your skills and visibility in the community.</p>
             <LoremIpsum />
@@ -40,7 +49,7 @@
             <LoremIpsum />
             <LoremIpsum />
         </WizardStep>
-        <WizardStep EnablePrevious>
+        <WizardStep EnablePrevious IconClass="fa fa-trophy">
             <h2>Participate in Coding Challenges.</h2>
             <p>Take part in online coding challenges to sharpen your skills and compete with others.</p>
             <LoremIpsum />
@@ -50,12 +59,12 @@
             <LoremIpsum />
             <LoremIpsum />
         </WizardStep>
-        <WizardStep EnablePrevious OnNext="userInfoForm.Validate">
+        <WizardStep EnablePrevious IconClass="fa fa-id-card" OnNext="userInfoForm.Validate">
             <h2>Provide Your Details</h2>
             <p>Please fill out the form below with your information:</p>
             <UserInfoForm @ref="userInfoForm" />
         </WizardStep>
-        <WizardStep EnablePrevious OnNext="AsyncCall">
+        <WizardStep EnablePrevious IconClass="fa fa-paperclip" OnNext="AsyncCall">
             <h2>Confirm Your Details</h2>
             <p>Here is the information you provided:</p>
             <ul>
@@ -74,15 +83,23 @@
 @code {
 
     private string _title = "Get started with Javascript!";
-    private string _subTitle = "Start with 3 simple steps.";
+    private string _subTitle = "With simple steps.";
     private bool _fixedMinHeight = true;
     private bool _fixedMaxWidth = true;
+    private int _additionalSteps = 0;
     private UserInfoForm userInfoForm = new();
+    private AdditionalStepsForm additionalStepsForm = new();
 
     private async Task<bool> AsyncCall()
     {
         await Task.Delay(1000);
         return true;
     }
-    
+
+    private async Task<bool> AddAdditionalSteps()
+    {
+        _additionalSteps = additionalStepsForm.AdditionalSteps;
+        return true;
+    }
+
 }
