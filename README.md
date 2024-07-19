@@ -1,5 +1,7 @@
 # Blazor Wizard Demo
 
+Based on: https://codepen.io/kaueburiti/pen/YNZGZO
+
 ![Blazor Wizard Demo](docs/wizard.gif)
 
 ## Overview
