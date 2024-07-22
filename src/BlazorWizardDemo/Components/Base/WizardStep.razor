@@ -15,6 +15,9 @@
     public bool EnablePrevious { get; set; }
 
     [Parameter]
+    public Func<Task<bool>>? OnPrevious { get; set; }
+
+    [Parameter]
     public Func<Task<bool>>? OnNext { get; set; }
 
     [Parameter]
