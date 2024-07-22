@@ -76,11 +76,11 @@
     [Parameter, EditorRequired]
     public required RenderFragment Completed { get; set; }
 
-    [Parameter, EditorRequired]
-    public required string Title { get; set; }
+    [Parameter]
+    public string? Title { get; set; }
 
-    [Parameter, EditorRequired]
-    public required string SubTitle { get; set; }
+    [Parameter]
+    public string? SubTitle { get; set; }
 
     [Parameter]
     public string? MinHeight { get; set; }
