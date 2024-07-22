@@ -68,9 +68,32 @@ label {
     margin-bottom: 10px;
 }
 
+.button {
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1rem;
+    background: #5094de;
+    color: #FFF;
+    padding: 10px 15px;
+    border: none;
+}
+
+    .button:hover {
+        background: #7baee6;
+    }
+
+    .button.previous, .button.next {
+        min-width: 115px;
+    }
+
+    .button:disabled {
+        background: #c3c3c3;
+        color: #FFF;
+        cursor: not-allowed;
+    }
+
 .wizard-header {
     position: relative;
-    color: #FFF;
     padding: 50px;
     border-radius: 5px;
     border-bottom-left-radius: 0;
@@ -93,11 +116,8 @@ label {
     letter-spacing: 2px;
 }
 
-.wizard-steps {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    transform: translateY(50%);
+.wizard-title, .wizard-subheading {
+    color: #FFF;
 }
 
 .wizard-footer {
@@ -115,13 +135,14 @@ label {
     }
 }
 
-.steps-count {
+.wizard-steps-count {
     align-self: center;
 }
 
 .wizard-buttons {
     display: flex;
     justify-content: center;
+    gap: 10px;
 }
 
 .wizard-content {
@@ -131,7 +152,7 @@ label {
     margin: 0 auto;
 }
 
-.line {
+.wizard-line {
     position: absolute;
     top: 23px;
     left: 50%;
@@ -140,34 +161,34 @@ label {
     transition: all 0.5s ease;
 }
 
-    .line.background {
+    .wizard-line.background {
         background: #c3c3c3;
         width: 100%;
     }
 
-    .line.progress {
+    .wizard-line.progress {
         background: #5094de;
         width: 100%;
         transform: scaleX(0);
         transform-origin: left center;
     }
 
-    .line.left {
+    .wizard-line.left {
         left: -50%;
         transform: scaleX(1);
     }
 
-    .line.right {
+    .wizard-line.right {
         left: 20px;
         z-index: -2;
     }
 
-.panels {
+.wizard-panels {
     position: relative;
     overflow: hidden;
 }
 
-.panel {
+.wizard-panel {
     position: absolute;
     top: 0;
     left: 0;
@@ -178,31 +199,33 @@ label {
     box-sizing: border-box;
 }
 
-.panel.moving-out-backward {
+.wizard-panel.moving-out-backward {
     transform: translateX(-100%);
 }
 
-.panel.moving-out-forward {
+.wizard-panel.moving-out-forward {
     transform: translateX(100%);
 }
 
-.panel.moving-in {
+.wizard-panel.moving-in {
     transform: translateX(0);
     position: relative;
 }
 
-.steps {
-    position: relative;
+.wizard-steps {
     display: flex;
     color: #fff;
     gap: 20px;
-    padding: 0 20px;
     overflow-x: auto;
     scrollbar-width: none;
     pointer-events: none;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transform: translateY(50%);
 }
 
-.step {
+.wizard-step {
     flex-basis: 0;
     flex-grow: 1;
     max-width: 100%;
@@ -211,11 +234,19 @@ label {
     border-radius: 5px;
 }
 
-.step-content {
+.wizard-step.first{
+    margin-left: 20px;
+}
+
+.wizard-step.last{
+    margin-right: 20px;
+}
+
+.wizard-step-content {
     position: relative;
 }
 
-.step-number {
+.wizard-step-number {
     font-size: 1.3rem;
     color: #676767;
     background: #FFF;
@@ -227,26 +258,27 @@ label {
     border-radius: 50%;
     border: 5px solid #c3c3c3;
     transition: opacity 0.5s;
+    box-sizing: content-box;
 }
 
-.step.completed .step-number {
+.wizard-step.completed .wizard-step-number {
     opacity: 0;
 }
 
-.step.completed .checkmark {
+.wizard-step.completed .wizard-checkmark {
     z-index: 0;
     animation: fill 0.4s ease-in-out forwards;
 }
 
-.step.completed .checkmark-check {
+.wizard-step.completed .wizard-checkmark-check {
     animation: stroke 0.5s linear 0.4s forwards;
 }
 
-.step.completed .line {
+.wizard-step.completed .wizard-line {
     transform: scaleX(1);
 }
 
-.checkmark {
+.wizard-checkmark {
     position: absolute;
     top: 0;
     left: 50%;
@@ -257,7 +289,7 @@ label {
     z-index: -1;
 }
 
-.checkmark-circle {
+.wizard-checkmark-circle {
     stroke-dasharray: 166;
     stroke-dashoffset: 166;
     stroke-width: 8;
@@ -267,38 +299,13 @@ label {
     animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 
-.checkmark-check {
+.wizard-checkmark-check {
     transform-origin: 50% 50%;
     stroke-dasharray: 40;
     stroke-dashoffset: 40;
     stroke: #FFF;
     stroke-width: 5;
 }
-
-.button {
-    cursor: pointer;
-    font-size: 1rem;
-    line-height: 1rem;
-    background: #5094de;
-    color: #FFF;
-    padding: 10px 15px;
-    border: none;
-}
-
-    .button:hover {
-        background: #7baee6;
-    }
-
-    .button.previous, .button.next {
-        margin: 0 4px;
-        min-width: 115px;
-    }
-
-    .button:disabled {
-        background: #c3c3c3;
-        color: #FFF;
-        cursor: not-allowed;
-    }
 
 @keyframes stroke {
     to {

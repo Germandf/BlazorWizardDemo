@@ -1,54 +1,52 @@
 ﻿@inject IJSRuntime JS
 
 <div class="wizard-content" style="max-width: @GetMaxWidth();">
-    <header class="wizard-header">
+    <div class="wizard-header">
         <h1 class="wizard-title">
             @Title
         </h1>
         <p class="wizard-subheading">
             @SubTitle
         </p>
-        <div class="wizard-steps">
-            <nav class="steps" @ref="_stepsElement">
-                @foreach (var step in _steps)
-                {
-                    <div class="step @(step.IsCompleted ? "completed" : "")">
-                        <div class="step-content">
-                            @if (_steps.First() == step)
-                            {
-                                <div class="line background left"></div>
-                                <div class="line progress left"></div>
-                            }
+        <div class="wizard-steps" @ref="_stepsElement">
+            @foreach (var step in _steps)
+            {
+                <div class="wizard-step @(GetStepCompletedClass(step)) @(GetStepPositionClass(step))">
+                    <div class="wizard-step-content">
+                        @if (_steps.First() == step)
+                        {
+                            <div class="wizard-line background left"></div>
+                            <div class="wizard-line progress left"></div>
+                        }
 
-                            <p class="step-number"><i class="@step.IconClass"></i></p>
-                            <svg class="checkmark" viewBox="0 0 52 52">
-                                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
-                                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                            </svg>
+                        <p class="wizard-step-number"><i class="@step.IconClass"></i></p>
+                        <svg class="wizard-checkmark" viewBox="0 0 52 52">
+                            <circle class="wizard-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="wizard-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
 
-                            <div class="line background @GetLastClass(step)"></div>
-                            <div class="line progress @GetLastClass(step)"></div>
-                        </div>
+                        <div class="wizard-line background @GetLastClass(step)"></div>
+                        <div class="wizard-line progress @GetLastClass(step)"></div>
                     </div>
-                }
-            </nav>
+                </div>
+            }
         </div>
-    </header>
+    </div>
 
-    <div class="panels" style="min-height: @GetMinHeight()">
+    <div class="wizard-panels" style="min-height: @GetMinHeight()">
         @foreach (var panel in _steps)
         {
-            <div class="panel @(panel.IsActive && !panel.IsCompleted ? "moving-in" : panel.MovementClass)">
+            <div class="wizard-panel @(GetPanelClass(panel))">
                 @panel.ChildContent
             </div>
         }
-        <div class="panel @(_steps.All(x => x.IsCompleted) ? "moving-in" : "moving-out-forward")">
+        <div class="wizard-panel @(GetCompletedPanelClass())">
             @Completed
         </div>
     </div>
 
     <div class="wizard-footer">
-        <div class="steps-count">
+        <div class="wizard-steps-count">
             @GetStepCount()
         </div>
         <div class="wizard-buttons">
@@ -109,6 +107,14 @@
         var suffix = addsDynamicSteps ? " (...)" : string.Empty;
         return $"Step {currentStep} of {totalSteps}{suffix}";
     }
+
+    private string? GetStepCompletedClass(WizardStep step) => step.IsCompleted ? "completed" : null;
+
+    private string? GetStepPositionClass(WizardStep step) => _steps.First() == step ? "first" : _steps.Last() == step ? "last" : null;
+
+    private string? GetPanelClass(WizardStep step) => step.IsActive && !step.IsCompleted ? "moving-in" : step.MovementClass;
+
+    private string? GetCompletedPanelClass() => _steps.All(x => x.IsCompleted) ? "moving-in" : "moving-out-forward";
 
     private bool GetPreviousDisabled()
     {
