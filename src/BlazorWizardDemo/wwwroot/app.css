@@ -214,7 +214,6 @@ label {
 
 .wizard-steps {
     display: flex;
-    color: #fff;
     gap: 20px;
     overflow-x: auto;
     scrollbar-width: none;

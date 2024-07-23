@@ -123,13 +123,14 @@
 
         var step = _steps[_currentStep];
 
-        if (_isLoadingPrevious || _isLoadingNext) return true;
+        // The first step only can go Previous if it has an OnPrevious action
+        if (_currentStep < 1 && step.OnPrevious is null)
+            return true;
 
-        if (_currentStep < 1) return step.OnPrevious is null;
+        if (step.EnablePrevious is false && step.OnPrevious is null)
+            return true;
 
-        if (step.OnPrevious is not null) return false;
-
-        return step.IsCompleted || step.EnablePrevious == false;
+        return _isLoadingPrevious || _isLoadingNext || step.IsCompleted;
     }
 
     private bool GetNextDisabled()
@@ -138,9 +139,7 @@
 
         var step = _steps[_currentStep];
 
-        if (_isLoadingPrevious || _isLoadingNext) return true;
-
-        return step.IsCompleted;
+        return _isLoadingPrevious || _isLoadingNext || step.IsCompleted;
     }
 
     private string GetPreviousText() => _isLoadingPrevious ? "Loading..." : "Previous";
@@ -180,7 +179,10 @@
             _isLoadingPrevious = true;
             var success = await onPrevious.Invoke();
             _isLoadingPrevious = false;
-            if (success is false) return;
+            
+            // If the call fails or the component is disposed
+            if (success is false || _steps.Any() is false)
+                return;
         }
 
         if (HasPreviousStep())
@@ -200,7 +202,10 @@
             _isLoadingNext = true;
             var success = await onNext.Invoke();
             _isLoadingNext = false;
-            if (success is false) return;
+            
+            // If the call fails or the component is disposed
+            if (success is false || _steps.Any() is false)
+                return;
         }
 
         if (_steps[_currentStep].AddsDynamicSteps)
