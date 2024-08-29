@@ -199,6 +199,11 @@ label {
     box-sizing: border-box;
 }
 
+.wizard-panel.moving-out-backward,
+.wizard-panel.moving-out-forward {
+    visibility: hidden;
+}
+
 .wizard-panel.moving-out-backward {
     transform: translateX(-100%);
 }
